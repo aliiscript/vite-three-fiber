@@ -6,23 +6,9 @@
 
 Run the following command to create a new project with this Starter:
 
+```bash
+npx r3f-sketch my-app --template vite
 ```
-yarn ...
-```
-
-# or
-
-```
-npx ...
-```
-
-# or
-
-```
-pnpm ...
-```
-
-cli for quicker installation coming soon.....
 
 ## Why
 
