@@ -1,8 +1,9 @@
 import frag from "./fragment.glsl";
 import vert from "./vertex.glsl";
 import * as THREE from "three";
+import { useRef } from "react";
 import { shaderMaterial } from "@react-three/drei";
-import { extend } from "@react-three/fiber";
+import { extend, useFrame } from "@react-three/fiber";
 
 type matProps = {
     time: number;
@@ -26,8 +27,17 @@ const ColorShiftMaterial = shaderMaterial(
 extend({ ColorShiftMaterial });
 
 export function CustomMaterial() {
+    const customMat = useRef<THREE.ShaderMaterial>(null!);
+
+    useFrame(({ clock }) => {
+        if (customMat.current) {
+            customMat.current.uniforms.time.value = clock.getElapsedTime();
+        }
+    });
+
     return (
         <colorShiftMaterial
+            ref={customMat}
             key={ColorShiftMaterial.key}
             color="blue"
             time={5}
