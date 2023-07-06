@@ -6,7 +6,6 @@ import { shaderMaterial } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 
 type matProps = {
-    time: number;
     color?: string;
 };
 
@@ -20,7 +19,7 @@ declare global {
 }
 
 const ColorShiftMaterial = shaderMaterial(
-    { time: 0, color: new THREE.Color(0.2, 0.0, 0.1) },
+    { u_time: 0, u_color: new THREE.Color(0.2, 0.0, 0.1) },
     vert,
     frag
 );
@@ -31,7 +30,7 @@ export function CustomMaterial() {
 
     useFrame(({ clock }) => {
         if (customMat.current) {
-            customMat.current.uniforms.time.value = clock.getElapsedTime();
+            customMat.current.uniforms.u_time.value = clock.getElapsedTime();
         }
     });
 
@@ -39,8 +38,7 @@ export function CustomMaterial() {
         <colorShiftMaterial
             ref={customMat}
             key={ColorShiftMaterial.key}
-            color="blue"
-            time={5}
+            color="blue"         
         />
     );
 }
