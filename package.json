@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@gltf-transform/functions": "^3.4.6",
     "@react-three/drei": "^9.68.6",
     "@react-three/fiber": "^8.13.0",
     "glsl-random": "^0.0.5",
@@ -35,6 +36,7 @@
     "r3f-perf": "^7.1.2",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
-    "vite-plugin-glsl": "^1.1.2"
+    "vite-plugin-glsl": "^1.1.2",
+    "vite-plugin-gltf": "^3.1.0"
   }
 }

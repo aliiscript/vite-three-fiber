@@ -1,7 +1,7 @@
 import frag from "./fragment.glsl";
 import vert from "./vertex.glsl";
 import * as THREE from "three";
-import { useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import { shaderMaterial } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 
@@ -12,20 +12,19 @@ type matProps = {
 declare global {
     namespace JSX {
         interface IntrinsicElements {
-            colorShiftMaterial: matProps &
-                JSX.IntrinsicElements["shaderMaterial"];
+            myMaterial: matProps & JSX.IntrinsicElements["shaderMaterial"];
         }
     }
 }
 
-const ColorShiftMaterial = shaderMaterial(
+export const MyMaterial = shaderMaterial(
     { u_time: 0, u_color: new THREE.Color(0.2, 0.0, 0.1) },
     vert,
     frag
 );
-extend({ ColorShiftMaterial });
+extend({ MyMaterial });
 
-export function CustomMaterial() {
+export const CustomMaterial = forwardRef((props, ref) => {
     const customMat = useRef<THREE.ShaderMaterial>(null!);
 
     useFrame(({ clock }) => {
@@ -34,11 +33,15 @@ export function CustomMaterial() {
         }
     });
 
+    // expose the custom material instance through the `ref` prop
+    useImperativeHandle(ref, () => customMat.current);
+
     return (
-        <colorShiftMaterial
+        <myMaterial
             ref={customMat}
-            key={ColorShiftMaterial.key}
-            color="blue"         
+            key={MyMaterial.key}
+            color="blue"
+            {...props}
         />
     );
-}
+});
